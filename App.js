@@ -16,7 +16,7 @@ class FlexboxExamples extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-start',
+    alignItems: 'center',
     //flexDirection: 'row'
   },
   box: {

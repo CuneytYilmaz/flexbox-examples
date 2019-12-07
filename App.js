@@ -5,9 +5,9 @@ class FlexboxExamples extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.box}/>
-        <View style={styles.box}/>
-        <View style={styles.box}/>
+        <View style={[styles.box, {flex: 1}]}/>
+        <View style={[styles.box, {flex: 2}]}/>
+        <View style={[styles.box, {flex: 1}]}/>
       </View>
     )
   }

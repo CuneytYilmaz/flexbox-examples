@@ -16,12 +16,12 @@ class FlexboxExamples extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'flex-end',
+    alignItems: 'stretch',
     //flexDirection: 'row'
   },
   box: {
     height: 50,
-    width: 50,
+    //width: 50,
     backgroundColor: '#e76e63',
     margin: 10,
   }

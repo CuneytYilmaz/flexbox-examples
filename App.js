@@ -1,19 +1,30 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { Component } from 'react'
+import { StyleSheet, Text, View, AppRegistry } from 'react-native'
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
+class FlexboxExamples extends Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.box}/>
+        <View style={styles.box}/>
+        <View style={styles.box}/>
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
+    //flexDirection: 'row'
   },
-});
+  box: {
+    height: 50,
+    width: 50,
+    backgroundColor: '#e76e63',
+    margin: 10,
+  }
+})
+
+export default FlexboxExamples;

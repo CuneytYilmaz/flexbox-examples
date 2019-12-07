@@ -16,7 +16,7 @@ class FlexboxExamples extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     //flexDirection: 'row'
   },
   box: {

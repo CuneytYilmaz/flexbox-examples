@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native'
 import styled from 'styled-components/native'
 import Tabs from './Tabs'
 import Stack from './Stack'
+import Drawer from './Drawer'
 
 const CenterView = styled.View`
   flex: 1;

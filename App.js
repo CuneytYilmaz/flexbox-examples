@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Animated } from 'react-native'
+import { StyleSheet, Text, View, Animated, TouchableOpacity, Image, ImageEditor } from 'react-native'
 import styled from 'styled-components/native'
+import * as ImagePicker from 'expo-image-picker'
+import * as Permissions from 'expo-permissions'
+import Constants from 'expo-constants'
 
 // decay - initial velocity and slow to a stop
 // spring - spring physics model
@@ -32,6 +35,27 @@ export default class App extends Component {
     opacity: new Animated.Value(0),
     width: new Animated.Value(0),
     height: new Animated.Value(0),
+    image: null,
+  }
+
+  pickImage = () => {
+    ImagePicker.launchImageLibraryAsync({
+      allowEditing: true,
+      aspect: [2,1]
+    }).then((result) => {
+      if (result.cancelled) {
+        return
+      }
+
+      ImageEditor.cropImage(result.uri, {
+        offset: { x:0, y:0 },
+        size: { width: result.width, height: result.height },
+        displaySize: { width: 200, height: 100 },
+        resizeMode: 'contain',
+      }, 
+      (uri) => this.setState(() => ({ image: uri })),
+      () => console.log('Error'))
+    })
   }
 
   componentDidMount () {
@@ -42,17 +66,39 @@ export default class App extends Component {
     Animated.spring(width, { toValue: 300, speed: 5 }).start()
 
     Animated.spring(height, { toValue: 300, speed: 5 }).start()
+
+    this.getPermissionAsync()
+  }
+
+  getPermissionAsync = async () => {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
   }
 
   render () {
-    const { opacity, width, height } = this.state
+    const { opacity, width, height, image } = this.state
     
     return (
       <View style={styles.container}>
-        <Animated.Image
-          style={[styles.img, { opacity, width, height }]}
-          source={{ uri: 'https://tylermcginnis.com/tylermcginnis_glasses-300.png' }}
-        />
+        <View style={styles.container}>
+          <Animated.Image
+            style={[styles.img, { opacity, width, height }]}
+            source={{ uri: 'https://tylermcginnis.com/tylermcginnis_glasses-300.png' }}
+          />
+        </View>
+        <View style={styles.container}>
+            <TouchableOpacity onPress={this.pickImage}>
+              <Text>Open Camera Roll</Text>
+            </TouchableOpacity>
+
+            {image && (
+              <Image style={styles.img} source={{ uri: image }} />
+            )}
+        </View>
       </View>
     )
   }
